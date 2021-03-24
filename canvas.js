@@ -5,11 +5,12 @@ var outputX = document.getElementById("valueX");
 var outputY = document.getElementById("valueY");
 //some random change
 
-var x = 30;
-var y = 30;
+var x = 20;
+var y = 20;
 var xmax = 30;
 var ymax = 30;
 var ratioXY = x/y;
+
 
 outputX.innerHTML = sliderX.value;
 sliderX.oninput = function() {
@@ -48,7 +49,9 @@ var c = canvas.getContext("2d");
 canvas.height = Math.floor(window.innerHeight/y)*y;
 canvas.width = Math.floor(window.innerHeight/x)*x * ratioXY;
 
-console.log(window.innerHeight,window.innerHeight*ratioXY);
+var CanvasW = c.canvas.width;
+var CanvasH = c.canvas.height;
+
 
 // canvas.addEventListener('mousemove', function cinput (event) {
 //     if(mouseDown){
@@ -62,7 +65,7 @@ for (var i = 0; i < y; i++){
         //console.log(Math.floor(255 / (j + 1) ),Math.floor(255 / (y + 1) ))
         //c.fillStyle = 'rgba(' + 40.5 + ',' + 10.5 +',255,1)';
         //c.fillStyle = 'rgba(255,0,255,1)';
-        c.fillRect(i*(window.innerHeight/x),j*(window.innerHeight/x), (window.innerHeight/x) + 1, (window.innerHeight/x) + 1) 
+        c.fillRect(i*(CanvasW/x),j*(CanvasH/x), (CanvasW/x), (CanvasH/x)) 
     }
 }
 
@@ -80,8 +83,7 @@ var intmouseX;
 var intmouseY;
 var pixelX;
 var pixelY;
-var CanvasW = c.canvas.width;
-var CanvasH = c.canvas.height;
+
 
 function mouseMove(e)
 {
