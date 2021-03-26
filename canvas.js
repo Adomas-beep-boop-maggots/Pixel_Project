@@ -1,16 +1,19 @@
 var sliderX = document.getElementById("sliderX");
 var sliderY = document.getElementById("sliderY");
-// var slider = document.getElementById("sliderY");
 var outputX = document.getElementById("valueX");
 var outputY = document.getElementById("valueY");
-//some random change
+
+/// --- Variable part --- ///
 
 var x = 20;
 var y = 20;
 var xmax = 30;
 var ymax = 30;
-var ratioXY = x/y;
+var ratioXY = x/y; //i dont think we need that
 
+
+/// --- Slider part --- ///
+// remove X slider later !!!
 
 outputX.innerHTML = sliderX.value;
 sliderX.oninput = function() {
@@ -40,35 +43,32 @@ sliderY.addEventListener("mousemove", function() {
     SliderY_value = sliderY.value;
     color = 'linear-gradient(90deg, rgb(107, 107, 107)' + (((SliderY_value  - 2) * (100/ymax)) + 4) + '% , rgb(177, 177, 177)' + (((SliderY_value  - 2) * (100/ymax)) + 4) + '%)';
     sliderY.style.background = color;
-    // canvas.height = Math.floor(window.innerHeight/y)*y;
 });
+
+/// --- Canvas part --- ///
 
 var canvas = document.querySelector("canvas");
 var c = canvas.getContext("2d");
 
+// canvas resolution
+// (we do this so that canvas witdth and height become devidable
+// by pixel width and hight, to make easyer and more accurate calculations)
 canvas.height = Math.floor(window.innerHeight/y)*y;
 canvas.width = Math.floor(window.innerHeight/x)*x * ratioXY;
 
+// canvas resolution variables
 var CanvasW = c.canvas.width;
 var CanvasH = c.canvas.height;
 
-
-// canvas.addEventListener('mousemove', function cinput (event) {
-//     if(mouseDown){
-//         console.log(Math.floor(event.clientX/(window.innerHeight/x)),Math.floor(event.clientY/(window.innerHeight*ratioXY/y)));
-//     }    
-// });
-
+// cool background
 for (var i = 0; i < y; i++){
     for (var j = 0; j < x; j++){
         c.fillStyle = 'rgba( ' + (j*j)/6 + ',' + (i+j)*2  +',' + (i*i)/6 + ')';
-        //console.log(Math.floor(255 / (j + 1) ),Math.floor(255 / (y + 1) ))
-        //c.fillStyle = 'rgba(' + 40.5 + ',' + 10.5 +',255,1)';
-        //c.fillStyle = 'rgba(255,0,255,1)';
         c.fillRect(i*(CanvasW/x),j*(CanvasH/x), (CanvasW/x), (CanvasH/x)) 
     }
 }
 
+// painting stuff
 let painting = false;
 
 function startPosition(e){
@@ -84,21 +84,7 @@ var intmouseY;
 var pixelX;
 var pixelY;
 
-
-function mouseMove(e)
-{
-    var mouseX, mouseY;
-
-    if(e.offsetX) {
-        mouseX = e.offsetX;
-        mouseY = e.offsetY;
-    }
-    else if(e.layerX) {
-        mouseX = e.layerX;
-        mouseY = e.layerY;
-    }
-}
-
+// draw/paint function
 function draw(e){
     var mouseX, mouseY;
 
@@ -111,30 +97,17 @@ function draw(e){
         mouseY = e.layerY;
     }
     if(!painting) return;
-    //console.log(Math.floor(e.clientX/(window.innerHeight/x)),Math.floor(e.clientY/(window.innerHeight*ratioXY/y)));
-    //intmouseX = Math.floor(e.x)
-    //intmouseY = Math.floor(e.y)
+
+    // mouse position pixel wise (2-30) 
     pixelX = Math.floor(mouseX/(CanvasW/x));
     pixelY = Math.floor(mouseY/(CanvasH/y));
 
-    //console.log(pixelX*c.canvas.width/x,pixelY*c.canvas.height/x)
-    c.fillRect(pixelX*CanvasW/x,pixelY*CanvasH/x,CanvasW/x,CanvasH/x)
-    
-    
-    
-    // console.log(Math.floor(e.clientX/(window.innerHeight/x) * (e.clientX/x)),
-    // Math.floor(e.clientY/(window.innerHeight*ratioXY/y) * (e.clientY/y)));
-    // c.fillRect(Math.floor(e.clientX/(window.innerHeight/x)) * Math.floor(e.clientX/x),
-    // Math.floor(e.clientY/(window.innerHeight*ratioXY/y)) * Math.floor(e.clientY/y),
-    // window.innerHeight/x,window.innerHeight/x);
+    // mouse position canvas wise
+    pixelToCanvasX = pixelX*CanvasW/x;
+    pixelToCanvasY = pixelY*CanvasH/y;
+    c.fillRect(pixelToCanvasX,pixelToCanvasY,CanvasW/x,CanvasH/x)
 }
 
-canvas.addEventListener('mousemove', mouseMove);
 canvas.addEventListener('mousedown', startPosition);
 canvas.addEventListener('mouseup', finishedPosition);
 canvas.addEventListener('mousemove', draw);
-
-// c.beginPath();
-// c.moveTo();
-// c.lineTo();
-// c.stroke();
