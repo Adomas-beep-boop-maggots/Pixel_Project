@@ -5,11 +5,12 @@ var outputY = document.getElementById("valueY");
 
 /// --- Variable part --- ///
 
-var x = 20;
-var y = 20;
+var CanvasDivision = 2.2; // canvas x size = window x size / CanvasDivision
+var x = 30;
+var y = 30;
 var xmax = 30;
 var ymax = 30;
-var ratioXY = x/y; //i dont think we need that
+var ratioXY = y/x; //i dont think we need that
 
 
 /// --- Slider part --- ///
@@ -34,7 +35,10 @@ sliderX.addEventListener("mousemove", function() {
     SliderX_value = sliderX.value;
     color = 'linear-gradient(90deg, rgb(107, 107, 107)' + (((SliderX_value  - 2) * (100/xmax)) + 4) + '% , rgb(177, 177, 177)' + (((SliderX_value  - 2) * (100/xmax)) + 4) + '%)';
     sliderX.style.background = color;
-    console.log(x,SliderX_value)
+    //x = SliderX_value;
+    //ratioXY = x/y;
+    //canvas.width = Math.floor(window.innerHeight/x)*x * ratioXY;
+    //console.log(x,SliderX_value)
 });
 
 var start_value = sliderY.getAttribute("value");
@@ -47,26 +51,45 @@ sliderY.addEventListener("mousemove", function() {
 
 /// --- Canvas part --- ///
 
-var canvas = document.querySelector("canvas");
-var c = canvas.getContext("2d");
 
-// canvas resolution
-// (we do this so that canvas witdth and height become devidable
-// by pixel width and hight, to make easyer and more accurate calculations)
-canvas.height = Math.floor(window.innerHeight/y)*y;
-canvas.width = Math.floor(window.innerHeight/x)*x * ratioXY;
 
-// canvas resolution variables
-var CanvasW = c.canvas.width;
-var CanvasH = c.canvas.height;
 
-// cool background
-for (var i = 0; i < y; i++){
-    for (var j = 0; j < x; j++){
-        c.fillStyle = 'rgba( ' + (j*j)/6 + ',' + (i+j)*2  +',' + (i*i)/6 + ')';
-        c.fillRect(i*(CanvasW/x),j*(CanvasH/x), (CanvasW/x), (CanvasH/x)) 
+class Canvas {
+    constructor(canvas, c, x, y){
+        this.canvas = canvas;
+        this.c = c;
+        this.x = x;
+        this.y = y;
+        canvas.height = Math.floor(window.innerWidth/y/CanvasDivision)*y * ratioXY;
+        canvas.width = Math.floor(window.innerWidth/x/CanvasDivision)*x;        
+    }
+    coolBackground(c, x, y){
+        var CanvasW = c.canvas.width;
+        var CanvasH = c.canvas.height;
+        c.fillRect(100,100,100,100);
+        for (var i = 0; i < x; i++){
+            for (var j = 0; j < y; j++){
+                c.fillStyle = 'rgba( ' + (j*j)/6 + ',' + (i+j)*2  +',' + (i*i)/6 + ')';
+                c.fillRect(i*(CanvasW/x),j*(CanvasH/y), (CanvasW/x), (CanvasH/y))
+            }
+        }
     }
 }
+
+
+var canvas2 = document.getElementById("canvas2");
+var c2 = canvas2.getContext("2d");
+Canvas2 = new Canvas(canvas2,c2, x, y);
+Canvas2.coolBackground(c2, x, y);
+
+var canvas1 = document.getElementById("canvas1");
+var c1 = canvas1.getContext("2d");
+Canvas1 = new Canvas(canvas1,c1,x,y);
+Canvas1.coolBackground(c1, x, y);
+
+// canvas resolution variables
+var CanvasW = c1.canvas.width;
+var CanvasH = c1.canvas.height;
 
 // painting stuff
 let painting = false;
@@ -97,7 +120,7 @@ function draw(e){
         mouseY = e.layerY;
     }
     if(!painting) return;
-
+    
     // mouse position pixel wise (2-30) 
     pixelX = Math.floor(mouseX/(CanvasW/x));
     pixelY = Math.floor(mouseY/(CanvasH/y));
@@ -105,9 +128,26 @@ function draw(e){
     // mouse position canvas wise
     pixelToCanvasX = pixelX*CanvasW/x;
     pixelToCanvasY = pixelY*CanvasH/y;
-    c.fillRect(pixelToCanvasX,pixelToCanvasY,CanvasW/x,CanvasH/x)
+    c1.fillRect(pixelToCanvasX,pixelToCanvasY,CanvasW/x,CanvasH/y)
+    console.log(CanvasW/x,CanvasH/y);
 }
 
-canvas.addEventListener('mousedown', startPosition);
-canvas.addEventListener('mouseup', finishedPosition);
-canvas.addEventListener('mousemove', draw);
+canvas2.addEventListener('mousedown', startPosition);
+canvas2.addEventListener('mouseup', finishedPosition);
+canvas2.addEventListener('mousemove', draw);
+
+canvas1.addEventListener('mousedown', startPosition);
+canvas1.addEventListener('mouseup', finishedPosition);
+canvas1.addEventListener('mousemove', draw);
+
+
+make_base();
+
+function make_base()
+{
+  base_image = new Image();
+  base_image.src = 'img/doge.jpg';
+  base_image.onload = function(){
+    c2.drawImage(base_image, 0, 0, c2.canvas.width, c2.canvas.height);
+  }
+}
