@@ -3,6 +3,7 @@ var sliderY = document.getElementById("sliderY");
 var outputX = document.getElementById("valueX");
 var outputY = document.getElementById("valueY");
 
+
 /// --- Variable part --- ///
 
 var CanvasDivision = 2.2; // canvas x size = window x size / CanvasDivision
@@ -11,6 +12,8 @@ var y = 30;
 var xmax = 30;
 var ymax = 30;
 var ratioXY = y/x; //i dont think we need that
+
+
 
 
 /// --- Slider part --- ///
@@ -77,15 +80,20 @@ class Canvas {
 }
 
 
+
 var canvas2 = document.getElementById("canvas2");
 var c2 = canvas2.getContext("2d");
 Canvas2 = new Canvas(canvas2,c2, x, y);
 Canvas2.coolBackground(c2, x, y);
 
 var canvas1 = document.getElementById("canvas1");
+//canvas1.style.visibility = "hidden"
 var c1 = canvas1.getContext("2d");
 Canvas1 = new Canvas(canvas1,c1,x,y);
 Canvas1.coolBackground(c1, x, y);
+
+
+
 
 // canvas resolution variables
 var CanvasW = c1.canvas.width;
@@ -101,14 +109,55 @@ function startPosition(e){
 
 function finishedPosition(){
     painting = false;
+    points_arr.push(points);
+    //console.log(points_arr);
+    points = [];
+    //console.log("done")
 }
-var intmouseX;
-var intmouseY;
-var pixelX;
-var pixelY;
+
+var pixelPos = {x: 0, y: 0}
+
+var _pixelPos = {x: -1, y: -1}
+
+
+//variables that stores pixel info
+//thats for undo functionality
+let points = [];
+let points_arr = [];
+//functions for undo functionality
+function drawPaths(){
+    // delete everything
+    Canvas1.coolBackground(c1, x, y);
+    // draw all the paths in the paths array
+    points_arr.forEach(points=>{
+        
+        //console.log(points) 
+        for(let i = 0; i < points.length; i++){
+            console.log(points[i].x, points[i].y)
+            PtC_X = points[i].x * CanvasW/x;
+            PtC_Y = points[i].y * CanvasH/y;
+            console.log(points[i].x);
+            c1.fillRect(PtC_X,PtC_Y,CanvasW/x,CanvasH/y)
+            //ctx.lineTo(points[i].x,points[i].y); 
+        }
+    })
+}
+function Undo(){
+    // remove the last path from the paths array
+    points_arr.splice(-1,1);
+    // draw all the paths in the paths array
+    drawPaths();
+    console.log(points_arr)
+    console.log("UNDO!!!!")
+}
+
+undo.addEventListener("click",Undo);
 
 // draw/paint function
 function draw(e){
+    //console.log(painting)
+    if(!painting) return;
+
     var mouseX, mouseY;
 
     if(e.offsetX) {
@@ -119,18 +168,28 @@ function draw(e){
         mouseX = e.layerX;
         mouseY = e.layerY;
     }
-    if(!painting) return;
     
     // mouse position pixel wise (2-30) 
-    pixelX = Math.floor(mouseX/(CanvasW/x));
-    pixelY = Math.floor(mouseY/(CanvasH/y));
+    pixelPos.x = Math.floor(mouseX/(CanvasW/x));
+    pixelPos.y = Math.floor(mouseY/(CanvasH/y));
+    if(((_pixelPos.x !== pixelPos.x) || (_pixelPos.y !== pixelPos.y))){
+        //console.log(pixelPos.x,pixelPos.y)
+        points.push({x:pixelPos.x, y:pixelPos.y});
+        //console.log(pixelPos)
+        //console.log(points)
+    }
+    _pixelPos.x = pixelPos.x;
+    _pixelPos.y = pixelPos.y;
 
     // mouse position canvas wise
-    pixelToCanvasX = pixelX*CanvasW/x;
-    pixelToCanvasY = pixelY*CanvasH/y;
-    c1.fillRect(pixelToCanvasX,pixelToCanvasY,CanvasW/x,CanvasH/y)
-    console.log(CanvasW/x,CanvasH/y);
+    PtC_X = pixelPos.x*CanvasW/x; //pixel to canvas X
+    PtC_Y = pixelPos.y*CanvasH/y; //pixel to canvas Y
+    //console.log(((_PtC_X == PtC_X) || (_PtC_Y == PtC_Y)))
+    c1.fillRect(PtC_X,PtC_Y,CanvasW/x,CanvasH/y)
+    //console.log(CanvasW/x,CanvasH/y);
 }
+
+
 
 canvas2.addEventListener('mousedown', startPosition);
 canvas2.addEventListener('mouseup', finishedPosition);
@@ -150,4 +209,19 @@ function make_base()
   base_image.onload = function(){
     c2.drawImage(base_image, 0, 0, c2.canvas.width, c2.canvas.height);
   }
+}
+
+
+
+
+
+function GridToggle(id, btn) {
+    var checkBox = document.getElementById("GridCheck");
+    if (checkBox.checked == true){
+        document.getElementById(id).style.display = 'none';
+    }
+    else{
+        document.getElementById(id).style.display = 'inline';
+    }
+    //btn.style.display = 'none';
 }
