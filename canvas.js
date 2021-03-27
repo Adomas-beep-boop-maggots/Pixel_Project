@@ -37,11 +37,7 @@ sliderX.style.background = color;
 sliderX.addEventListener("mousemove", function() {
     SliderX_value = sliderX.value;
     color = 'linear-gradient(90deg, rgb(107, 107, 107)' + (((SliderX_value  - 2) * (100/xmax)) + 4) + '% , rgb(177, 177, 177)' + (((SliderX_value  - 2) * (100/xmax)) + 4) + '%)';
-    sliderX.style.background = color;
-    //x = SliderX_value;
-    //ratioXY = x/y;
-    //canvas.width = Math.floor(window.innerHeight/x)*x * ratioXY;
-    //console.log(x,SliderX_value)
+    sliderX.style.background = color;)
 });
 
 var start_value = sliderY.getAttribute("value");
@@ -87,7 +83,6 @@ Canvas2 = new Canvas(canvas2,c2, x, y);
 Canvas2.coolBackground(c2, x, y);
 
 var canvas1 = document.getElementById("canvas1");
-//canvas1.style.visibility = "hidden"
 var c1 = canvas1.getContext("2d");
 Canvas1 = new Canvas(canvas1,c1,x,y);
 Canvas1.coolBackground(c1, x, y);
@@ -110,9 +105,7 @@ function startPosition(e){
 function finishedPosition(){
     painting = false;
     points_arr.push(points);
-    //console.log(points_arr);
     points = [];
-    //console.log("done")
 }
 
 var pixelPos = {x: 0, y: 0}
@@ -131,14 +124,10 @@ function drawPaths(){
     // draw all the paths in the paths array
     points_arr.forEach(points=>{
         
-        //console.log(points) 
         for(let i = 0; i < points.length; i++){
-            console.log(points[i].x, points[i].y)
             PtC_X = points[i].x * CanvasW/x;
             PtC_Y = points[i].y * CanvasH/y;
-            console.log(points[i].x);
             c1.fillRect(PtC_X,PtC_Y,CanvasW/x,CanvasH/y)
-            //ctx.lineTo(points[i].x,points[i].y); 
         }
     })
 }
@@ -147,15 +136,11 @@ function Undo(){
     points_arr.splice(-1,1);
     // draw all the paths in the paths array
     drawPaths();
-    console.log(points_arr)
-    console.log("UNDO!!!!")
 }
 
 undo.addEventListener("click",Undo);
 
-// draw/paint function
 function draw(e){
-    //console.log(painting)
     if(!painting) return;
 
     var mouseX, mouseY;
@@ -173,10 +158,7 @@ function draw(e){
     pixelPos.x = Math.floor(mouseX/(CanvasW/x));
     pixelPos.y = Math.floor(mouseY/(CanvasH/y));
     if(((_pixelPos.x !== pixelPos.x) || (_pixelPos.y !== pixelPos.y))){
-        //console.log(pixelPos.x,pixelPos.y)
         points.push({x:pixelPos.x, y:pixelPos.y});
-        //console.log(pixelPos)
-        //console.log(points)
     }
     _pixelPos.x = pixelPos.x;
     _pixelPos.y = pixelPos.y;
@@ -184,9 +166,7 @@ function draw(e){
     // mouse position canvas wise
     PtC_X = pixelPos.x*CanvasW/x; //pixel to canvas X
     PtC_Y = pixelPos.y*CanvasH/y; //pixel to canvas Y
-    //console.log(((_PtC_X == PtC_X) || (_PtC_Y == PtC_Y)))
     c1.fillRect(PtC_X,PtC_Y,CanvasW/x,CanvasH/y)
-    //console.log(CanvasW/x,CanvasH/y);
 }
 
 
