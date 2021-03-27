@@ -13,12 +13,6 @@ var xmax = 30;
 var ymax = 30;
 var ratioXY = y/x; //i dont think we need that
 
-
-
-
-/// --- Slider part --- ///
-// remove X slider later !!!
-
 outputX.innerHTML = sliderX.value;
 sliderX.oninput = function() {
     outputX.innerHTML = this.value;
@@ -37,7 +31,7 @@ sliderX.style.background = color;
 sliderX.addEventListener("mousemove", function() {
     SliderX_value = sliderX.value;
     color = 'linear-gradient(90deg, rgb(107, 107, 107)' + (((SliderX_value  - 2) * (100/xmax)) + 4) + '% , rgb(177, 177, 177)' + (((SliderX_value  - 2) * (100/xmax)) + 4) + '%)';
-    sliderX.style.background = color;)
+    sliderX.style.background = color;
 });
 
 var start_value = sliderY.getAttribute("value");
