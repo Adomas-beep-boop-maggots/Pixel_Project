@@ -3,7 +3,7 @@
 }
 
 #undo {
-    margin-top: 8%;
+    /* margin-top: 8%; */
     margin-left: 3%
 }
 
@@ -17,12 +17,12 @@ padding: 0;
 overflow: auto;
 background-color: #303030;
 }
-button {
+/* button {
 position: absolute;
 top: 5px;
 left: 5px;
 z-index: 2;
-}
+} */
 p {
     margin-bottom: 10px;
     margin-top: 40px;
