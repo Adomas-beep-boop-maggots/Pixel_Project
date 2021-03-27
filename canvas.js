@@ -3,15 +3,44 @@ var sliderY = document.getElementById("sliderY");
 var outputX = document.getElementById("valueX");
 var outputY = document.getElementById("valueY");
 
-
-/// --- Variable part --- ///
-
 var CanvasDivision = 2.2; // canvas x size = window x size / CanvasDivision
 var x = 30;
 var y = 30;
 var xmax = 30;
 var ymax = 30;
 var ratioXY = y/x; //i dont think we need that
+
+class Canvas {
+    constructor(canvas, c, x, y){
+        this.canvas = canvas;
+        this.c = c;
+        this.x = x;
+        this.y = y;
+        canvas.height = Math.floor(window.innerWidth/y/CanvasDivision) *y * ratioXY;
+        canvas.width = Math.floor(window.innerWidth/x/CanvasDivision) *x;        
+    }
+    coolBackground(c, x, y){
+        var CanvasW = c.canvas.width;
+        var CanvasH = c.canvas.height;
+        c.fillRect(100,100,100,100);
+        for (var i = 0; i < x; i++){
+            for (var j = 0; j < y; j++){
+                c.fillStyle = 'rgba( ' + (j*j)/6 + ',' + (i+j)*2  +',' + (i*i)/6 + ')';
+                c.fillRect(i*(CanvasW/x),j*(CanvasH/y), (CanvasW/x)+1, (CanvasH/y)+1)
+            }
+        }
+    }
+}
+
+var canvas1 = document.getElementById("canvas1");
+var c1 = canvas1.getContext("2d");
+Canvas1 = new Canvas(canvas1,c1,x,y);
+Canvas1.coolBackground(c1, x, y);
+
+var CanvasW = c1.canvas.width;
+var CanvasH = c1.canvas.height;
+
+
 
 outputX.innerHTML = sliderX.value;
 sliderX.oninput = function() {
@@ -32,6 +61,15 @@ sliderX.addEventListener("mousemove", function() {
     SliderX_value = sliderX.value;
     color = 'linear-gradient(90deg, rgb(107, 107, 107)' + (((SliderX_value  - 2) * (100/xmax)) + 4) + '% , rgb(177, 177, 177)' + (((SliderX_value  - 2) * (100/xmax)) + 4) + '%)';
     sliderX.style.background = color;
+    x = SliderX_value;
+    ratioXY = y/x;
+    canvas1.width = Math.floor(window.innerWidth/x/CanvasDivision)*x;
+    canvas1.height = Math.floor(window.innerWidth/y/CanvasDivision * ratioXY)*y;
+    CanvasW = c1.canvas.width;
+    CanvasH = c1.canvas.height;
+    Canvas1.coolBackground(c1, x, y);
+    drawPaths();
+    //console.log(Math.floor(window.innerWidth/x/CanvasDivision))
 });
 
 var start_value = sliderY.getAttribute("value");
@@ -40,53 +78,27 @@ sliderY.addEventListener("mousemove", function() {
     SliderY_value = sliderY.value;
     color = 'linear-gradient(90deg, rgb(107, 107, 107)' + (((SliderY_value  - 2) * (100/ymax)) + 4) + '% , rgb(177, 177, 177)' + (((SliderY_value  - 2) * (100/ymax)) + 4) + '%)';
     sliderY.style.background = color;
+    y = SliderY_value;
+    ratioXY = y/x;
+    canvas1.width = Math.floor(window.innerWidth/x/CanvasDivision)*x;
+    canvas1.height = Math.floor(window.innerWidth/y/CanvasDivision * ratioXY)*y;
+    CanvasW = c1.canvas.width;
+    CanvasH = c1.canvas.height;
+    Canvas1.coolBackground(c1, x, y);
+    drawPaths();
+    //console.log(Math.floor(window.innerWidth/x/CanvasDivision))
 });
 
 /// --- Canvas part --- ///
 
 
-
-
-class Canvas {
-    constructor(canvas, c, x, y){
-        this.canvas = canvas;
-        this.c = c;
-        this.x = x;
-        this.y = y;
-        canvas.height = Math.floor(window.innerWidth/y/CanvasDivision)*y * ratioXY;
-        canvas.width = Math.floor(window.innerWidth/x/CanvasDivision)*x;        
-    }
-    coolBackground(c, x, y){
-        var CanvasW = c.canvas.width;
-        var CanvasH = c.canvas.height;
-        c.fillRect(100,100,100,100);
-        for (var i = 0; i < x; i++){
-            for (var j = 0; j < y; j++){
-                c.fillStyle = 'rgba( ' + (j*j)/6 + ',' + (i+j)*2  +',' + (i*i)/6 + ')';
-                c.fillRect(i*(CanvasW/x),j*(CanvasH/y), (CanvasW/x), (CanvasH/y))
-            }
-        }
-    }
-}
-
-
-
 var canvas2 = document.getElementById("canvas2");
 var c2 = canvas2.getContext("2d");
 Canvas2 = new Canvas(canvas2,c2, x, y);
-Canvas2.coolBackground(c2, x, y);
-
-var canvas1 = document.getElementById("canvas1");
-var c1 = canvas1.getContext("2d");
-Canvas1 = new Canvas(canvas1,c1,x,y);
-Canvas1.coolBackground(c1, x, y);
-
 
 
 
 // canvas resolution variables
-var CanvasW = c1.canvas.width;
-var CanvasH = c1.canvas.height;
 
 // painting stuff
 let painting = false;
@@ -121,7 +133,7 @@ function drawPaths(){
         for(let i = 0; i < points.length; i++){
             PtC_X = points[i].x * CanvasW/x;
             PtC_Y = points[i].y * CanvasH/y;
-            c1.fillRect(PtC_X,PtC_Y,CanvasW/x,CanvasH/y)
+            c1.fillRect(PtC_X,PtC_Y,CanvasW/x,CanvasW/x)
         }
     })
 }
@@ -156,11 +168,13 @@ function draw(e){
     }
     _pixelPos.x = pixelPos.x;
     _pixelPos.y = pixelPos.y;
+    //console.log(pixelPos.x,pixelPos.y)
 
     // mouse position canvas wise
     PtC_X = pixelPos.x*CanvasW/x; //pixel to canvas X
     PtC_Y = pixelPos.y*CanvasH/y; //pixel to canvas Y
-    c1.fillRect(PtC_X,PtC_Y,CanvasW/x,CanvasH/y)
+    c1.fillRect(PtC_X,PtC_Y,CanvasW/x,CanvasW/x)
+    console.log(CanvasW/x,CanvasH/y)
 }
 
 
