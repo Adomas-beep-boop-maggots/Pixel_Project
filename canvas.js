@@ -217,23 +217,27 @@ function GridToggle(id, btn) {
 }
 
 sliderX.sliderUpdate = function(){
-    x = SliderX_value;
+    x = sliderX.value;
     ratioXY = y/x;
     canvas1.width = Math.floor(window.innerWidth/x/CanvasDivision)*x;
     canvas1.height = Math.floor(window.innerWidth/y/CanvasDivision * ratioXY)*y;
     CanvasW = c1.canvas.width;
     CanvasH = c1.canvas.height;
     Canvas1.coolBackground(c1, x, y);
+    //console.log(Math.floor(window.innerWidth/x/CanvasDivision)*x,Math.floor(window.innerWidth/y/CanvasDivision * ratioXY)*y)
+    console.log(sliderX.value,sliderY.value)
     drawPaths();
 }
 
 sliderY.sliderUpdate = function(){
-    y = SliderY_value;
+    y = sliderY.value;
     ratioXY = y/x;
-    canvas1.width = Math.floor(window.innerWidth/x/CanvasDivision)*x;
     canvas1.height = Math.floor(window.innerWidth/y/CanvasDivision * ratioXY)*y;
+    canvas1.width = Math.floor(window.innerWidth/x/CanvasDivision)*x;
     CanvasW = c1.canvas.width;
     CanvasH = c1.canvas.height;
     Canvas1.coolBackground(c1, x, y);
+    //console.log(Math.floor(window.innerWidth/x/CanvasDivision)*x,Math.floor(window.innerWidth/y/CanvasDivision * ratioXY)*y)
+    console.log(sliderX.value,sliderY.value)
     drawPaths();
 }
