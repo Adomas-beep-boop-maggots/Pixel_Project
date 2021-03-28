@@ -10,11 +10,6 @@
 #canvas1{
     position: absolute;
 }
-
-#canvas2{
-    
-}
-
 .canvas {
     /* border: 1px solid black; */
     margin-left: 3%;
@@ -109,3 +104,9 @@ p {
     outline: none;
     border: 3px;
 } */
+
+.dragdrop{
+    float: inline-start;
+    margin-left: 3%;
+    margin-right: 2%;
+}

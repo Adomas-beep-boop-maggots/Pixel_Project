@@ -3,12 +3,16 @@ var sliderY = document.getElementById("sliderY");
 var outputX = document.getElementById("valueX");
 var outputY = document.getElementById("valueY");
 
+
+
 var CanvasDivision = 2.2; // canvas x size = window x size / CanvasDivision
 var x = 30;
 var y = 30;
 var xmax = 30;
 var ymax = 30;
 var ratioXY = y/x; //i dont think we need that
+
+
 
 class Canvas {
     constructor(canvas, c, x, y){
@@ -32,6 +36,7 @@ class Canvas {
     }
 }
 
+
 var canvas1 = document.getElementById("canvas1");
 var c1 = canvas1.getContext("2d");
 Canvas1 = new Canvas(canvas1,c1,x,y);
@@ -39,7 +44,6 @@ Canvas1.coolBackground(c1, x, y);
 
 var CanvasW = c1.canvas.width;
 var CanvasH = c1.canvas.height;
-
 
 
 outputX.innerHTML = sliderX.value;
@@ -61,14 +65,6 @@ sliderX.addEventListener("mousemove", function() {
     SliderX_value = sliderX.value;
     color = 'linear-gradient(90deg, rgb(107, 107, 107)' + (((SliderX_value  - 2) * (100/xmax)) + 4) + '% , rgb(177, 177, 177)' + (((SliderX_value  - 2) * (100/xmax)) + 4) + '%)';
     sliderX.style.background = color;
-    x = SliderX_value;
-    ratioXY = y/x;
-    canvas1.width = Math.floor(window.innerWidth/x/CanvasDivision)*x;
-    canvas1.height = Math.floor(window.innerWidth/y/CanvasDivision * ratioXY)*y;
-    CanvasW = c1.canvas.width;
-    CanvasH = c1.canvas.height;
-    Canvas1.coolBackground(c1, x, y);
-    drawPaths();
     //console.log(Math.floor(window.innerWidth/x/CanvasDivision))
 });
 
@@ -78,16 +74,12 @@ sliderY.addEventListener("mousemove", function() {
     SliderY_value = sliderY.value;
     color = 'linear-gradient(90deg, rgb(107, 107, 107)' + (((SliderY_value  - 2) * (100/ymax)) + 4) + '% , rgb(177, 177, 177)' + (((SliderY_value  - 2) * (100/ymax)) + 4) + '%)';
     sliderY.style.background = color;
-    y = SliderY_value;
-    ratioXY = y/x;
-    canvas1.width = Math.floor(window.innerWidth/x/CanvasDivision)*x;
-    canvas1.height = Math.floor(window.innerWidth/y/CanvasDivision * ratioXY)*y;
-    CanvasW = c1.canvas.width;
-    CanvasH = c1.canvas.height;
-    Canvas1.coolBackground(c1, x, y);
-    drawPaths();
     //console.log(Math.floor(window.innerWidth/x/CanvasDivision))
 });
+
+
+
+
 
 /// --- Canvas part --- ///
 
@@ -174,7 +166,7 @@ function draw(e){
     PtC_X = pixelPos.x*CanvasW/x; //pixel to canvas X
     PtC_Y = pixelPos.y*CanvasH/y; //pixel to canvas Y
     c1.fillRect(PtC_X,PtC_Y,CanvasW/x,CanvasW/x)
-    console.log(CanvasW/x,CanvasH/y)
+    //console.log(CanvasW/x,CanvasH/y)
 }
 
 
@@ -188,19 +180,29 @@ canvas1.addEventListener('mouseup', finishedPosition);
 canvas1.addEventListener('mousemove', draw);
 
 
-make_base();
+let src = 'img/doge.jpg';
 
-function make_base()
+make_base(src);
+
+function make_base(src)
 {
   base_image = new Image();
-  base_image.src = 'img/doge.jpg';
+  base_image.src = src;
   base_image.onload = function(){
     c2.drawImage(base_image, 0, 0, c2.canvas.width, c2.canvas.height);
   }
 }
 
 
+canvas2.ondrop = function(e){
+    e.preventDefault();
+    c2.drawImage(e.dataTransfer.files[0], 0, 0, c2.canvas.width, c2.canvas.height);
+}
 
+canvas2.ondragover = function(e){
+    //console.log("aaaaaaaaa")
+    return false;
+}
 
 
 function GridToggle(id, btn) {
@@ -212,4 +214,26 @@ function GridToggle(id, btn) {
         document.getElementById(id).style.display = 'inline';
     }
     //btn.style.display = 'none';
+}
+
+sliderX.sliderUpdate = function(){
+    x = SliderX_value;
+    ratioXY = y/x;
+    canvas1.width = Math.floor(window.innerWidth/x/CanvasDivision)*x;
+    canvas1.height = Math.floor(window.innerWidth/y/CanvasDivision * ratioXY)*y;
+    CanvasW = c1.canvas.width;
+    CanvasH = c1.canvas.height;
+    Canvas1.coolBackground(c1, x, y);
+    drawPaths();
+}
+
+sliderY.sliderUpdate = function(){
+    y = SliderY_value;
+    ratioXY = y/x;
+    canvas1.width = Math.floor(window.innerWidth/x/CanvasDivision)*x;
+    canvas1.height = Math.floor(window.innerWidth/y/CanvasDivision * ratioXY)*y;
+    CanvasW = c1.canvas.width;
+    CanvasH = c1.canvas.height;
+    Canvas1.coolBackground(c1, x, y);
+    drawPaths();
 }
