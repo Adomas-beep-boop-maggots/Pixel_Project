@@ -143,9 +143,7 @@ function drawPaths(){
     points_arr.forEach(points=>{
         
         for(let i = 0; i < points.length; i++){
-            PtC_X = points[i].x * CanvasW/x;
-            PtC_Y = points[i].y * CanvasH/y;
-            c1.fillRect(PtC_X,PtC_Y,CanvasW/x,CanvasW/x)
+            c1.fillRect(points[i].x * CanvasW/x,points[i].y * CanvasH/y,CanvasW/x,CanvasW/x)
         }
     })
 }
@@ -159,6 +157,7 @@ function Undo(){
 undo.addEventListener("click",Undo);
 
 function draw(e){
+    //c1.fillStyle = 'rgba(0,0,255,0.1)';
     var mouseX, mouseY;
     if(e.offsetX) {
         mouseX = e.offsetX;
@@ -173,24 +172,36 @@ function draw(e){
     pixelPos.y = Math.floor(mouseY/(CanvasH/y));
     PtC_X = pixelPos.x*CanvasW/x; //pixel to canvas X
     PtC_Y = pixelPos.y*CanvasH/y; //pixel to canvas Y
+    
     //console.log("aaa");
     //console.log(pixelPos.x,pixelPos.y)
 
-    if(!painting) return;
-
-
-
+    if(!painting) {
+        if(((_pixelPos.x !== pixelPos.x) || (_pixelPos.y !== pixelPos.y))){
+            //console.log(_pixelPos.x , pixelPos.x)
+            //Canvas1.coolBackground(c1, x, y);
+            console.log(PtC_X,PtC_Y,CanvasW/x,CanvasW/x)
+            drawPaths();
+            c1.fillStyle = "#FF0000";
+            c1.fillRect(PtC_X,PtC_Y,CanvasW/x,CanvasW/x);
+        }
+        return;
+    }
+    
     // mouse position pixel wise (2-30) 
-
+    
     if(((_pixelPos.x !== pixelPos.x) || (_pixelPos.y !== pixelPos.y))){
         points.push({x:pixelPos.x, y:pixelPos.y});
+        console.log("pushed")
     }
+    
     _pixelPos.x = pixelPos.x;
     _pixelPos.y = pixelPos.y;
     //console.log(pixelPos.x,pixelPos.y)
 
     // mouse position canvas wise
     c1.fillRect(PtC_X,PtC_Y,CanvasW/x,CanvasW/x)
+    //console.log("draw")
 
 }
 
@@ -220,22 +231,13 @@ function make_base(src)
 
 var input = document.getElementById('input');
 input.addEventListener('change', handleFiles);
-var Image_Res;
+var Image_Res = 1;
 
 function handleFiles(e) {
     var files=e.target.files;
     for(var i=0;i<files.length;i++){
         var img=new Image;
         img.onload=function(){
-            //console.log(this)
-            //console.log(this.naturalHeight,this.naturalWidth);
-            //console.log(this.naturalHeight/this.naturalWidth)
-            //console.log(this.naturalWidth/this.naturalHeight)
-
-            //console.log(Math.floor(this.naturalHeight/y)*y,Math.floor(this.naturalWidth/x)*x);
-            //console.log((Math.floor(this.naturalHeight/y)*y)/(Math.floor(this.naturalWidth/x)*x))
-
-            //console.log((Math.floor(this.naturalWidth/x)*x)/(Math.floor(this.naturalHeight/y)*y))
 
             Image_Res = Math.floor(this.height/this.width*30)/30;
             canvas2.width = Math.floor(window.innerWidth/30/CanvasDivision)*30;
@@ -247,7 +249,7 @@ function handleFiles(e) {
             c2.drawImage(this,0,0,c2.canvas.width,c2.canvas.height);
             x = 30;
             y = 30*(canvas2.height/canvas2.height);
-            Canvas1.coolBackground(c1, 30, 30*Image_Res);
+            Canvas1.coolBackground(c1, x, y);
             points_arr = [];
 
             console.log(canvas2.height/canvas2.width)
