@@ -180,9 +180,9 @@ function draw(e){
         if(((_pixelPos.x !== pixelPos.x) || (_pixelPos.y !== pixelPos.y))){
             //console.log(_pixelPos.x , pixelPos.x)
             //Canvas1.coolBackground(c1, x, y);
-            console.log(PtC_X,PtC_Y,CanvasW/x,CanvasW/x)
+            //console.log(PtC_X,PtC_Y,CanvasW/x,CanvasW/x)
             drawPaths();
-            c1.fillStyle = "#FF0000";
+            c1.fillStyle = 'rgba(255,0,0,1)';
             c1.fillRect(PtC_X,PtC_Y,CanvasW/x,CanvasW/x);
         }
         return;
@@ -192,7 +192,6 @@ function draw(e){
     
     if(((_pixelPos.x !== pixelPos.x) || (_pixelPos.y !== pixelPos.y))){
         points.push({x:pixelPos.x, y:pixelPos.y});
-        console.log("pushed")
     }
     
     _pixelPos.x = pixelPos.x;
@@ -248,7 +247,10 @@ function handleFiles(e) {
             console.log(Image_Res)
             c2.drawImage(this,0,0,c2.canvas.width,c2.canvas.height);
             x = 30;
-            y = 30*(canvas2.height/canvas2.height);
+            y = 30*(canvas2.height/canvas2.width);
+            CanvasW = c1.canvas.width;
+            CanvasH = c1.canvas.height;
+            console.log(x,y)
             Canvas1.coolBackground(c1, x, y);
             points_arr = [];
 
