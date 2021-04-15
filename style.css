@@ -4,7 +4,9 @@
 
 #undo {
     /* margin-top: 8%; */
-    margin-left: 3%
+    left: 6px;
+    margin-left: 50%;
+    position: absolute;
 }
 
 #canvas1{
@@ -92,7 +94,11 @@ p {
 
 #Grid{
     position:relative;
-    z-index:100;
+    /* z-index:100; */
+}
+
+#input{
+    margin-left: 3%
 }
 /* .slider{
     position:  relative;

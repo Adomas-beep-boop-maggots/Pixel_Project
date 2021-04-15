@@ -66,6 +66,16 @@ sliderX.addEventListener("mousemove", function() {
     color = 'linear-gradient(90deg, rgb(107, 107, 107)' + (((SliderX_value  - 2) * (100/xmax)) + 4) + '% , rgb(177, 177, 177)' + (((SliderX_value  - 2) * (100/xmax)) + 4) + '%)';
     sliderX.style.background = color;
     //console.log(Math.floor(window.innerWidth/x/CanvasDivision))
+    x = sliderX.value;
+    ratioXY = y/x;
+    canvas1.width = Math.floor(window.innerWidth/x/CanvasDivision)*x;
+    canvas1.height = Math.floor(window.innerWidth/y/CanvasDivision * ratioXY)*y;
+    CanvasW = c1.canvas.width;
+    CanvasH = c1.canvas.height;
+    Canvas1.coolBackground(c1, x, y);
+    //console.log(Math.floor(window.innerWidth/x/CanvasDivision)*x,Math.floor(window.innerWidth/y/CanvasDivision * ratioXY)*y)
+    //console.log(sliderX.value,sliderY.value)
+    drawPaths();    
 });
 
 var start_value = sliderY.getAttribute("value");
@@ -75,6 +85,16 @@ sliderY.addEventListener("mousemove", function() {
     color = 'linear-gradient(90deg, rgb(107, 107, 107)' + (((SliderY_value  - 2) * (100/ymax)) + 4) + '% , rgb(177, 177, 177)' + (((SliderY_value  - 2) * (100/ymax)) + 4) + '%)';
     sliderY.style.background = color;
     //console.log(Math.floor(window.innerWidth/x/CanvasDivision))
+    y = sliderY.value;
+    ratioXY = y/x;
+    canvas1.height = Math.floor(window.innerWidth/y/CanvasDivision * ratioXY)*y;
+    canvas1.width = Math.floor(window.innerWidth/x/CanvasDivision)*x;
+    CanvasW = c1.canvas.width;
+    CanvasH = c1.canvas.height;
+    Canvas1.coolBackground(c1, x, y);
+    //console.log(Math.floor(window.innerWidth/x/CanvasDivision)*x,Math.floor(window.innerWidth/y/CanvasDivision * ratioXY)*y)
+    //console.log(sliderX.value,sliderY.value)
+    drawPaths();
 });
 
 
@@ -193,17 +213,45 @@ function make_base(src)
   }
 }
 
+var input = document.getElementById('input');
+input.addEventListener('change', handleFiles);
+var Image_Res;
 
-canvas2.ondrop = function(e){
-    e.preventDefault();
-    c2.drawImage(e.dataTransfer.files[0], 0, 0, c2.canvas.width, c2.canvas.height);
-}
+function handleFiles(e) {
+    var files=e.target.files;
+    for(var i=0;i<files.length;i++){
+        var img=new Image;
+        img.onload=function(){
+            //console.log(this)
+            //console.log(this.naturalHeight,this.naturalWidth);
+            //console.log(this.naturalHeight/this.naturalWidth)
+            //console.log(this.naturalWidth/this.naturalHeight)
 
-canvas2.ondragover = function(e){
-    //console.log("aaaaaaaaa")
-    return false;
-}
+            //console.log(Math.floor(this.naturalHeight/y)*y,Math.floor(this.naturalWidth/x)*x);
+            //console.log((Math.floor(this.naturalHeight/y)*y)/(Math.floor(this.naturalWidth/x)*x))
 
+            //console.log((Math.floor(this.naturalWidth/x)*x)/(Math.floor(this.naturalHeight/y)*y))
+
+            Image_Res = (this.height/this.width);
+            canvas2.width = Math.floor(window.innerWidth/30/CanvasDivision)*30;
+            canvas2.height = canvas2.width * Image_Res;
+            canvas1.width = canvas2.width;
+            canvas1.height = canvas2.height;
+            //console.log(Math.floor(window.innerWidth/30/CanvasDivision)*30,(Math.floor(window.innerWidth/30/CanvasDivision * Image_Res)*30))
+            console.log(Image_Res)
+            c2.drawImage(this,0,0,c2.canvas.width,c2.canvas.height);
+            x = 30;
+            y = 30*Image_Res;
+            Canvas1.coolBackground(c1, 30, 30*Image_Res);
+            points_arr = [];
+
+            console.log(canvas2.height/canvas2.width)
+        }
+    //Canvas1.coolBackground(c1, x, y);
+    img.src=URL.createObjectURL(files[i]);
+    //console.log("here!!!")
+    }
+  }
 
 function GridToggle(id, btn) {
     var checkBox = document.getElementById("GridCheck");
@@ -217,27 +265,9 @@ function GridToggle(id, btn) {
 }
 
 sliderX.sliderUpdate = function(){
-    x = sliderX.value;
-    ratioXY = y/x;
-    canvas1.width = Math.floor(window.innerWidth/x/CanvasDivision)*x;
-    canvas1.height = Math.floor(window.innerWidth/y/CanvasDivision * ratioXY)*y;
-    CanvasW = c1.canvas.width;
-    CanvasH = c1.canvas.height;
-    Canvas1.coolBackground(c1, x, y);
-    //console.log(Math.floor(window.innerWidth/x/CanvasDivision)*x,Math.floor(window.innerWidth/y/CanvasDivision * ratioXY)*y)
-    console.log(sliderX.value,sliderY.value)
-    drawPaths();
+
 }
 
 sliderY.sliderUpdate = function(){
-    y = sliderY.value;
-    ratioXY = y/x;
-    canvas1.height = Math.floor(window.innerWidth/y/CanvasDivision * ratioXY)*y;
-    canvas1.width = Math.floor(window.innerWidth/x/CanvasDivision)*x;
-    CanvasW = c1.canvas.width;
-    CanvasH = c1.canvas.height;
-    Canvas1.coolBackground(c1, x, y);
-    //console.log(Math.floor(window.innerWidth/x/CanvasDivision)*x,Math.floor(window.innerWidth/y/CanvasDivision * ratioXY)*y)
-    console.log(sliderX.value,sliderY.value)
-    drawPaths();
+
 }
