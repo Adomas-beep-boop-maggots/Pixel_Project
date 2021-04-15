@@ -159,10 +159,7 @@ function Undo(){
 undo.addEventListener("click",Undo);
 
 function draw(e){
-    if(!painting) return;
-
     var mouseX, mouseY;
-
     if(e.offsetX) {
         mouseX = e.offsetX;
         mouseY = e.offsetY;
@@ -172,9 +169,19 @@ function draw(e){
         mouseY = e.layerY;
     }
     
-    // mouse position pixel wise (2-30) 
     pixelPos.x = Math.floor(mouseX/(CanvasW/x));
     pixelPos.y = Math.floor(mouseY/(CanvasH/y));
+    PtC_X = pixelPos.x*CanvasW/x; //pixel to canvas X
+    PtC_Y = pixelPos.y*CanvasH/y; //pixel to canvas Y
+    //console.log("aaa");
+    //console.log(pixelPos.x,pixelPos.y)
+
+    if(!painting) return;
+
+
+
+    // mouse position pixel wise (2-30) 
+
     if(((_pixelPos.x !== pixelPos.x) || (_pixelPos.y !== pixelPos.y))){
         points.push({x:pixelPos.x, y:pixelPos.y});
     }
@@ -183,10 +190,8 @@ function draw(e){
     //console.log(pixelPos.x,pixelPos.y)
 
     // mouse position canvas wise
-    PtC_X = pixelPos.x*CanvasW/x; //pixel to canvas X
-    PtC_Y = pixelPos.y*CanvasH/y; //pixel to canvas Y
     c1.fillRect(PtC_X,PtC_Y,CanvasW/x,CanvasW/x)
-    //console.log(CanvasW/x,CanvasH/y)
+
 }
 
 
@@ -232,7 +237,7 @@ function handleFiles(e) {
 
             //console.log((Math.floor(this.naturalWidth/x)*x)/(Math.floor(this.naturalHeight/y)*y))
 
-            Image_Res = (this.height/this.width);
+            Image_Res = Math.floor(this.height/this.width*30)/30;
             canvas2.width = Math.floor(window.innerWidth/30/CanvasDivision)*30;
             canvas2.height = canvas2.width * Image_Res;
             canvas1.width = canvas2.width;
