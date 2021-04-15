@@ -156,6 +156,7 @@ function Undo(){
 
 undo.addEventListener("click",Undo);
 
+
 function draw(e){
     //c1.fillStyle = 'rgba(0,0,255,0.1)';
     var mouseX, mouseY;
@@ -175,6 +176,8 @@ function draw(e){
     
     //console.log("aaa");
     //console.log(pixelPos.x,pixelPos.y)
+    c2.drawImage(tempImg, 0, 0, c2.canvas.width, c2.canvas.height);
+    c2.fillRect(PtC_X,PtC_Y,CanvasW/x,CanvasW/x);
 
     if(!painting) {
         if(((_pixelPos.x !== pixelPos.x) || (_pixelPos.y !== pixelPos.y))){
@@ -184,9 +187,12 @@ function draw(e){
             drawPaths();
             c1.fillStyle = 'rgba(255,0,0,1)';
             c1.fillRect(PtC_X,PtC_Y,CanvasW/x,CanvasW/x);
+            c2.fillStyle = 'rgba(255,0,0,0.3)';
+           
         }
         return;
     }
+
     
     // mouse position pixel wise (2-30) 
     
@@ -225,12 +231,15 @@ function make_base(src)
   base_image.src = src;
   base_image.onload = function(){
     c2.drawImage(base_image, 0, 0, c2.canvas.width, c2.canvas.height);
+    tempImg = base_image;
   }
 }
 
 var input = document.getElementById('input');
 input.addEventListener('change', handleFiles);
 var Image_Res = 1;
+
+var tempImg;
 
 function handleFiles(e) {
     var files=e.target.files;
@@ -245,6 +254,7 @@ function handleFiles(e) {
             canvas1.height = canvas2.height;
             //console.log(Math.floor(window.innerWidth/30/CanvasDivision)*30,(Math.floor(window.innerWidth/30/CanvasDivision * Image_Res)*30))
             console.log(Image_Res)
+            tempImg = this;
             c2.drawImage(this,0,0,c2.canvas.width,c2.canvas.height);
             x = 30;
             y = 30*(canvas2.height/canvas2.width);
