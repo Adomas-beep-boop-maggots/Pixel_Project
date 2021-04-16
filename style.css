@@ -36,60 +36,31 @@ p {
     font-size: 20px;
     /* font-style:unset; */
 }
+#sliderX{
+    margin-left: 50%;
+}
+
 .slider{
-    -webkit-appearance: none;
-    width: 49%;
-    height: 20px;
-    background: linear-gradient(90deg, rgb(117, 252, 117) 5%, rgb(214, 214, 214) 0%);
-    background: rgb(177, 177, 177);
-    outline: none;
-    opacity: 0.7;
-    -webkit-transition: 0.2s;
-    transition: opacity 0.2s;
-    border-radius: 12px;
-    box-shadow: 0px 1px 10px black;
-
+    /* transform:translate(-50%,-50%); */
+    /* padding:20px; */
+    background:#000000;
+    border:1px solid #00acee;
+    border-radius:20px;
+    /* ; */
 }
 
-.slider::after{
-    content: '30';
-    color: white;
-    font-size: 2rem;
-    position: absolute;
-    left: 40%;
-    top: 4%;
-}
-.slider::before{
-    content: '2';
-    color: white;
-    font-size: 2rem;
-    position: absolute;
-    left: 6%;
-    top: 4%;
+#sliderY{
+    -webkit-appearance: slider-vertical;
+    writing-mode: bt-lr; 
+    margin-left: 50%;
+    width: 12px;
+    display: table-cell;
+
+
 }
 
 .slider:hover {
     opacity: 1;
-}
-
-.slider::-webkit-slider-thumb {
-    -webkit-appearance: none;
-    appearance: none;
-    width: 30px;
-    height: 30px;
-    background: white;
-    border-radius: 50%;
-    cursor: pointer;
-}
-
-.slider::-moz-range-thumb{
-    -webkit-appearance: none;
-    appearance: none;
-    width: 30px;
-    height: 30px;
-    background: white;
-    border-radius: 50%;
-    cursor: pointer;
 }
 
 #Grid{

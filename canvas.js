@@ -1,7 +1,7 @@
 var sliderX = document.getElementById("sliderX");
 var sliderY = document.getElementById("sliderY");
-var outputX = document.getElementById("valueX");
-var outputY = document.getElementById("valueY");
+// var outputX = document.getElementById("valueX");
+// var outputY = document.getElementById("valueY");
 
 
 
@@ -46,25 +46,28 @@ var CanvasW = c1.canvas.width;
 var CanvasH = c1.canvas.height;
 
 
-outputX.innerHTML = sliderX.value;
-sliderX.oninput = function() {
-    outputX.innerHTML = this.value;
-}
+// outputX.innerHTML = 30;
+// sliderX.oninput = function() {
+//     outputX.innerHTML = this.value;
+// }
 
-outputY.innerHTML = sliderY.value;
-sliderY.oninput = function() {
-    outputY.innerHTML = this.value;
-}
+// outputY.innerHTML = 30;
+// sliderY.oninput = function() {
+//     outputY.innerHTML = 32 - this.value;
+// }
 
 var start_value = sliderX.getAttribute("value");
 var SliderX_value = start_value;
-var color = 'linear-gradient(90deg, rgb(107, 107, 107)' + SliderX_value * (100/xmax) + '% , rgb(177, 177, 177)' + SliderX_value * (100/xmax) + '%)';
-sliderX.style.background = color;
+sliderX.style.width = CanvasW;
+//var color = 'linear-gradient(90deg, rgb(107, 107, 107)' + SliderX_value * (100/xmax) + '% , rgb(177, 177, 177)' + SliderX_value * (100/xmax) + '%)';
+//sliderX.style.background = color;
 
+//sliderX.style.height = CanvasW;
+//color = 'linear-gradient(90deg, rgb(107, 107, 107)' + (((SliderX_value  - 2) * (100/xmax)) + 4) + '% , rgb(177, 177, 177)' + (((SliderX_value  - 2) * (100/xmax)) + 4) + '%)';
 sliderX.addEventListener("mousemove", function() {
+    //color = 'linear-gradient(90deg, rgb(107, 107, 107)' + (((SliderX_value  - 2) * (100/xmax)) + 4) + '% , rgb(177, 177, 177)' + (((SliderX_value  - 2) * (100/xmax)) + 4) + '%)';
     SliderX_value = sliderX.value;
-    color = 'linear-gradient(90deg, rgb(107, 107, 107)' + (((SliderX_value  - 2) * (100/xmax)) + 4) + '% , rgb(177, 177, 177)' + (((SliderX_value  - 2) * (100/xmax)) + 4) + '%)';
-    sliderX.style.background = color;
+    //sliderX.style.background = color;
     //console.log(Math.floor(window.innerWidth/x/CanvasDivision))
     x = sliderX.value;
     ratioXY = y/x;
@@ -80,12 +83,13 @@ sliderX.addEventListener("mousemove", function() {
 
 var start_value = sliderY.getAttribute("value");
 var SliderY_value = start_value;
+sliderY.style.height = CanvasH;
 sliderY.addEventListener("mousemove", function() {
     SliderY_value = sliderY.value;
-    color = 'linear-gradient(90deg, rgb(107, 107, 107)' + (((SliderY_value  - 2) * (100/ymax)) + 4) + '% , rgb(177, 177, 177)' + (((SliderY_value  - 2) * (100/ymax)) + 4) + '%)';
-    sliderY.style.background = color;
+    //color = 'linear-gradient(0deg, rgb(177, 177, 177)' + (((SliderY_value  - 2) * (100/ymax)) + 4) + '% , rgb(107, 107, 107)' + (((SliderY_value  - 2) * (100/ymax)) + 4) + '%)';
+    //sliderY.style.background = color;
     //console.log(Math.floor(window.innerWidth/x/CanvasDivision))
-    y = sliderY.value;
+    y = 32 - sliderY.value;
     ratioXY = y/x;
     canvas1.height = Math.floor(window.innerWidth/y/CanvasDivision * ratioXY)*y;
     canvas1.width = Math.floor(window.innerWidth/x/CanvasDivision)*x;
@@ -96,6 +100,8 @@ sliderY.addEventListener("mousemove", function() {
     //console.log(sliderX.value,sliderY.value)
     drawPaths();
 });
+
+
 
 
 
@@ -258,8 +264,13 @@ function handleFiles(e) {
             c2.drawImage(this,0,0,c2.canvas.width,c2.canvas.height);
             x = 30;
             y = 30*(canvas2.height/canvas2.width);
+            sliderX.value = x;
+            sliderY.value = y;
+            SliderX_value = x;
+            SliderY_value = y;
             CanvasW = c1.canvas.width;
             CanvasH = c1.canvas.height;
+            sliderY.style.height = CanvasH;
             console.log(x,y)
             Canvas1.coolBackground(c1, x, y);
             points_arr = [];
