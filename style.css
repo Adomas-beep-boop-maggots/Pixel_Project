@@ -7,6 +7,8 @@
     left: 6px;
     margin-left: 50%;
     position: absolute;
+    top: 7%;
+    left: -6.2%;
 }
 
 #canvas1{
@@ -14,6 +16,7 @@
     margin-bottom: 0px;
     margin-top: 0px;
     top: 13%;
+    top: 80px;
 }
 #canvas2{
     margin-bottom: 0px;
@@ -76,6 +79,8 @@ p {
 
 #input{
     margin-left: 3%;
+    position: absolute;
+    top: 7%;
 }
 /* .slider{
     position:  relative;
