@@ -1,5 +1,5 @@
 .canvasContainer{
-    margin-top: 2%;
+    margin-top: 0%;
 }
 
 #undo {
@@ -11,9 +11,15 @@
 
 #canvas1{
     position: absolute;
+    margin-bottom: 0px;
+    margin-top: 0px;
+    top: 13%;
+}
+#canvas2{
+    margin-bottom: 0px;
+    margin-top: 0px;
 }
 .canvas {
-    /* border: 1px solid black; */
     margin-left: 3%;
 }
 body {
@@ -37,7 +43,10 @@ p {
     /* font-style:unset; */
 }
 #sliderX{
-    margin-left: 50%;
+    margin-top: 34px;
+    margin-left: 50.6%;
+    bottom: 0px;
+    top: 13%;
 }
 
 .slider{
@@ -52,11 +61,8 @@ p {
 #sliderY{
     -webkit-appearance: slider-vertical;
     writing-mode: bt-lr; 
-    margin-left: 50%;
     width: 12px;
-    display: table-cell;
-
-
+    margin-left: 50%;
 }
 
 .slider:hover {
@@ -69,7 +75,7 @@ p {
 }
 
 #input{
-    margin-left: 3%
+    margin-left: 3%;
 }
 /* .slider{
     position:  relative;

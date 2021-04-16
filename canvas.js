@@ -26,10 +26,18 @@ class Canvas {
     coolBackground(c, x, y){
         var CanvasW = c.canvas.width;
         var CanvasH = c.canvas.height;
+        // c.fillRect(100,100,100,100);
+        // for (var i = 0; i < x; i++){
+        //     for (var j = 0; j < y; j++){
+        //         c.fillStyle = 'rgba( ' + (j*j)/6 + ',' + (i+j)*2  +',' + (i*i)/6 + ')';
+        //         c.fillRect(i*(CanvasW/x),j*(CanvasH/y), (CanvasW/x)+1, (CanvasH/y)+1)
+        //     }
+        // }
         c.fillRect(100,100,100,100);
         for (var i = 0; i < x; i++){
             for (var j = 0; j < y; j++){
-                c.fillStyle = 'rgba( ' + (j*j)/6 + ',' + (i+j)*2  +',' + (i*i)/6 + ')';
+                //c.fillStyle = 'rgba( ' + (j*j)/6 + ',' + (i+j)*2  +',' + (i*i)/6 + ')';
+                c.fillStyle = 'rgba(255,255,255,1)';
                 c.fillRect(i*(CanvasW/x),j*(CanvasH/y), (CanvasW/x)+1, (CanvasH/y)+1)
             }
         }
@@ -149,6 +157,7 @@ function drawPaths(){
     points_arr.forEach(points=>{
         
         for(let i = 0; i < points.length; i++){
+            c1.fillStyle = 'rgba(0,0,0,1)';
             c1.fillRect(points[i].x * CanvasW/x,points[i].y * CanvasH/y,CanvasW/x,CanvasW/x)
         }
     })
@@ -211,6 +220,7 @@ function draw(e){
     //console.log(pixelPos.x,pixelPos.y)
 
     // mouse position canvas wise
+    c1.fillStyle = 'rgba(255,0,0,1)';
     c1.fillRect(PtC_X,PtC_Y,CanvasW/x,CanvasW/x)
     //console.log("draw")
 
