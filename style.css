@@ -18,6 +18,11 @@
     top: 13%;
     top: 80px;
 }
+#Download_button{
+    position: absolute;
+    top: 7%;
+    margin-left: 37%;
+}
 #canvas2{
     margin-bottom: 0px;
     margin-top: 0px;

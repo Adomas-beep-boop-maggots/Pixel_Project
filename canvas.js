@@ -311,3 +311,13 @@ sliderX.sliderUpdate = function(){
 sliderY.sliderUpdate = function(){
 
 }
+
+function download_image(){
+    c1.fillStyle = 'rgba(255,255,255,1)';
+    c1.fillRect(PtC_X,PtC_Y,CanvasW/x,CanvasW/x)
+    image = canvas1.toDataURL("image/png").replace("image/png", "image/octet-stream");
+    var link = document.createElement('a');
+    link.download = "my-image.png";
+    link.href = image;
+    link.click();
+  }
