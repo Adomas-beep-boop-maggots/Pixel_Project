@@ -2,15 +2,10 @@
     margin-top: 3%;
 }
 
-#undo {
-}
-
 #canvas1{
     margin-bottom: 0px;
     margin-top: 0px;
     position: absolute;
-}
-#Download_button{
 }
 #canvas2{
     margin-bottom: 0px;
@@ -71,9 +66,6 @@ p {
 #Grid{
     position:relative;
     /* z-index:100; */
-}
-
-#input{
 }
 /* .slider{
     position:  relative;
