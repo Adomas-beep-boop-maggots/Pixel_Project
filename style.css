@@ -1,27 +1,16 @@
 .canvasContainer{
-    margin-top: 0%;
+    margin-top: 3%;
 }
 
 #undo {
-    /* margin-top: 8%; */
-    left: 6px;
-    margin-left: 50%;
-    position: absolute;
-    top: 7%;
-    left: -6.2%;
 }
 
 #canvas1{
-    position: absolute;
     margin-bottom: 0px;
     margin-top: 0px;
-    top: 13%;
-    top: 75px;
+    position: absolute;
 }
 #Download_button{
-    position: absolute;
-    top: 7%;
-    margin-left: 37%;
 }
 #canvas2{
     margin-bottom: 0px;
@@ -35,6 +24,7 @@ margin: 0;
 padding: 0;
 overflow: auto;
 background-color: #303030;
+margin-left: -1%;
 }
 /* button {
 position: absolute;
@@ -51,10 +41,10 @@ p {
     /* font-style:unset; */
 }
 #sliderX{
-    margin-top: 34px;
-    margin-left: 50.6%;
-    bottom: 0px;
-    top: 13%;
+    width: 640px;
+    position: absolute;
+    margin-left: 52%;
+    margin-top: -2%;
 }
 
 .slider{
@@ -70,7 +60,8 @@ p {
     -webkit-appearance: slider-vertical;
     writing-mode: bt-lr; 
     width: 12px;
-    margin-left: 50%;
+    margin-left: 0%;
+    position: absolute;
 }
 
 .slider:hover {
@@ -83,9 +74,6 @@ p {
 }
 
 #input{
-    margin-left: 3%;
-    position: absolute;
-    top: 7%;
 }
 /* .slider{
     position:  relative;
@@ -102,4 +90,9 @@ p {
     float: inline-start;
     margin-left: 3%;
     margin-right: 2%;
+}
+.inputBox{
+    position: absolute;
+    margin-top: -2%;
+    margin-left: 3%;
 }

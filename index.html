@@ -6,20 +6,18 @@
     <link rel="stylesheet" href="./style.css">
 </head>
 <body>
-    <div class="slideContainer">
-    <!-- <input id="sliderY" type="range" min="2" max="100" value="50"> -->
-    <!-- <p>X:<span id = "valueX"></span></p>
-      <p>Y:<span id = "valueY"></span></p> -->
-    </div>
-    <input type="file" multiple id="input"/>
-    <button id="undo">undo</button>
-    <button id="Download_button" onclick="download_image()">
-      Download
+    <div class="InputBox">
+      <input type="file" multiple id="input"/>
+      <button id="undo">undo</button>
+      <button id="Download_button" onclick="download_image()">
+        Download
       </button><br>
+    </div>
     <!-- <label for="GridCheck">Grid:</label>  -->
     <!-- <input type="checkbox" id="GridCheck" onclick="GridToggle('canvas1')"> -->
-    <input id="sliderX" class="slider" type="range" min="2" max="30" value="30" onChange="sliderUpdate();" >
+    
     <div class="canvasContainer">
+      <input id="sliderX" class="slider" type="range" min="2" max="30" value="30" onChange="sliderUpdate();" >
       <canvas id = "canvas2" class="canvas"></canvas>
       <canvas id = "canvas1" class="canvas"></canvas>
       <input id="sliderY" class="slider" type="range" min="2" max="30" value="0" onChange="sliderUpdate();" orient="vertical">

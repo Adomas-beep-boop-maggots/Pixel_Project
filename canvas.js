@@ -5,7 +5,7 @@ var sliderY = document.getElementById("sliderY");
 
 
 
-var CanvasDivision = 2.2; // canvas x size = window x size / CanvasDivision
+var CanvasDivision = 2.1; // canvas x size = window x size / CanvasDivision
 var x = 30;
 var y = 30;
 var xmax = 30;
@@ -46,6 +46,7 @@ class Canvas {
 
 
 var canvas1 = document.getElementById("canvas1");
+canvas1.onmouseout = function() {finishedPosition();};
 var c1 = canvas1.getContext("2d");
 Canvas1 = new Canvas(canvas1,c1,x,y);
 Canvas1.coolBackground(c1, x, y);
@@ -119,6 +120,7 @@ sliderY.addEventListener("mousemove", function() {
 
 
 var canvas2 = document.getElementById("canvas2");
+canvas2.onmouseout = function() {finishedPosition()};
 var c2 = canvas2.getContext("2d");
 Canvas2 = new Canvas(canvas2,c2, x, y);
 
@@ -130,14 +132,16 @@ Canvas2 = new Canvas(canvas2,c2, x, y);
 let painting = false;
 
 function startPosition(e){
+    
     painting = true;
     draw(e);
 }
 
+
 function finishedPosition(){
-    painting = false;
-    points_arr.push(points);
-    points = [];
+        painting = false;
+        points_arr.push(points);
+        points = [];
 }
 
 var pixelPos = {x: 0, y: 0}
@@ -170,6 +174,10 @@ function Undo(){
 }
 
 undo.addEventListener("click",Undo);
+
+var canvas_array = {};
+
+//var _pixelPos = {x: -1, y: -1}
 
 
 function draw(e){
@@ -212,7 +220,7 @@ function draw(e){
     // mouse position pixel wise (2-30) 
     
     if(((_pixelPos.x !== pixelPos.x) || (_pixelPos.y !== pixelPos.y))){
-        points.push({x:pixelPos.x, y:pixelPos.y});
+        points.push({x:pixelPos.x, y:pixelPos.y,color:[0,0,0]});
     }
     
     _pixelPos.x = pixelPos.x;
@@ -222,7 +230,6 @@ function draw(e){
     // mouse position canvas wise
     c1.fillStyle = 'rgba(255,0,0,1)';
     c1.fillRect(PtC_X,PtC_Y,CanvasW/x,CanvasW/x)
-    //console.log("draw")
 
 }
 
@@ -321,3 +328,50 @@ function download_image(){
     link.href = image;
     link.click();
   }
+
+  function download(data, filename, type) {
+    var file = new Blob([data], {type: type});
+    if (window.navigator.msSaveOrOpenBlob) // IE10+
+        window.navigator.msSaveOrOpenBlob(file, filename);
+    else { // Others
+        var a = document.createElement("a"),
+                url = URL.createObjectURL(file);
+        a.href = url;
+        a.download = filename;
+        document.body.appendChild(a);
+        a.click();
+        setTimeout(function() {
+            document.body.removeChild(a);
+            window.URL.revokeObjectURL(url);  
+        }, 0); 
+    }
+}
+
+var sus = [ 0,255,255,0,0,0,0,255,
+            0,255,255,0,255,255,0,255,
+            0,255,255,0,255,255,255,255,
+            0,255,255,0,0,255,255,255,
+            0,255,255,255,0,255,0,255,
+            0,255,255,255,0,0,255,255]
+
+var temp_data_del = new Uint8Array(sus.length)
+
+function image_to_array(){
+    for(var xi = 0; xi < x; xi++){
+        for(var yi = 0; yi < y; yi++){
+            
+        }
+    }
+}
+
+function download_binary() {
+    // for (var i = 0; i < sus.length; i++) {
+    //     if(sus[i] == 255){
+    //         temp_data_del[i] = 255;
+    //     }
+    //     else{
+    //         temp_data_del[i] = 0;
+    //     }
+       // }
+    download(temp_data_del,"axaxa.bin")
+}
